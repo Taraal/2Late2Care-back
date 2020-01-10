@@ -1,0 +1,16 @@
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+bin
+.sonarqube
+obj
+obj/Debug
+obj/2Late2CareBack.csproj.EntityFrameworkCore.targets
+obj/2Late2CareBack.csproj.nuget.cache
+obj/2Late2CareBack.csproj.nuget.dgspec.json
+obj/2Late2CareBack.csproj.nuget.g.props
+obj/2Late2CareBack.csproj.nuget.g.targets
+obj/project.assets.json
