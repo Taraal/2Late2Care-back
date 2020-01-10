@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace _2Late2CareBack
 {
-    class Tag
+    public class Tag
     {
         [Key]
         public int Id { get; set; }
 
         [StringLength(50)]
         [Required]
-        private string libelle {get; set;}
+        public string libelle {get; set;}
     }
 }

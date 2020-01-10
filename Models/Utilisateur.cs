@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace _2Late2CareBack
 {
-    class Utilisateur
+    public class Utilisateur
     {
         [Key]
         public int Id { get; set; }
 
         [StringLength(50)]
         [Required]
-        private string pseudo {get; set;}
+        public string pseudo {get; set;}
 
         [Required]
-        private Classe classe {get; set;}
+        public Classe classe {get; set;}
 
         [Required]
-        private string mail {get; set;}
+        public string mail {get; set;}
 
     }
 }

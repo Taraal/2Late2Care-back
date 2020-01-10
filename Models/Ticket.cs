@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace _2Late2CareBack
 {
-    class Ticket
+    public class Ticket
     {
         [Key]
         public int Id { get; set; }
 
         [StringLength(50)]
         [Required]
-        private string titre {get; set;}
+        public string titre {get; set;}
 
         [StringLength(150)]
         [Required]
-        private string description {get; set;}
+        public string description {get; set;}
 
         [Required]
-        private Utilisateur auteur {get; set;}
+        public Utilisateur auteur {get; set;}
 
-        private string urlPhoto {get; set;}
+        public string urlPhoto {get; set;}
 
-        public ICollection<Tag> Tags { get; set; } 
+        public ICollection<Tag> Tags { get; set; }
 
     }
 }
