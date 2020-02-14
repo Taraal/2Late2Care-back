@@ -10,7 +10,7 @@ namespace _2Late2CareBack
     public class TicketTag
     {
 
-        public int TagId {get; set;}
+        public string libelle {get; set;}
         public Tag tag {get; set;}
 
         public int TicketId {get; set;}

@@ -21,6 +21,8 @@ namespace _2Late2CareBack
         [Required]
         public string description {get; set;}
 
+        public DateTime date {get; set;}
+
         [Required]
         public Utilisateur auteur {get; set;}
 

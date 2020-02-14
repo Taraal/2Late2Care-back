@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using _2Late2CareBack.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace _2Late2CareBack.Controllers
 {
@@ -11,10 +15,6 @@ namespace _2Late2CareBack.Controllers
     [Route("[controller]")]
     public class TicketController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<TicketController> _logger;
 
@@ -23,17 +23,72 @@ namespace _2Late2CareBack.Controllers
             _logger = logger;
         }
 
-        /*
+        
         [HttpGet]
-        public IEnumerable<Ticket> Get()
+        public IEnumerable<Ticket> GetAll()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Ticket
+            DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
+            var one = ConfigurationManager.ConnectionStrings;
+            var random = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            string docstring = random.ConnectionString;
+
+            optionsBuilder.UseMySql(docstring);
+
+            using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
             {
-                titre = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return dbContext.Tickets;
+            }
+        
         }
-        */
+
+        [HttpPost]
+        public void addTicket([FromForm]Utilisateur utilisateur, [FromForm]string titre,[FromForm]string urlphoto, [FromForm]string description, [FromForm] List<Tag> tags){
+
+            DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
+            var one = ConfigurationManager.ConnectionStrings;
+            var random = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            string docstring = random.ConnectionString;
+
+            optionsBuilder.UseMySql(docstring);
+
+            using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
+            {
+                Ticket dbTicket = new Ticket();
+                dbTicket.auteur = utilisateur;
+                dbTicket.titre = titre;
+                dbTicket.description = description;
+                dbTicket.date = DateTime.Now;
+                dbTicket.urlPhoto = urlphoto;
+                dbContext.Tickets.Add(dbTicket);
+                foreach (Tag tag in tags)
+                {
+                    TicketTag ticketTag = new TicketTag();
+                    ticketTag.tag = tag;
+                    ticketTag.ticket = dbTicket;
+                    tag.TicketTags.Add(ticketTag);
+                    dbTicket.TicketTags.Add(ticketTag);
+                }
+                dbContext.SaveChanges();
+            }
+        }
+
+        [Route("/month")]
+        [HttpGet]
+        public IEnumerable<Ticket> GetTopMonth()
+        {
+            DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
+            var one = ConfigurationManager.ConnectionStrings;
+            var random = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            string docstring = random.ConnectionString;
+
+            optionsBuilder.UseMySql(docstring);
+
+            using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
+            {
+                return dbContext.Tickets.FromSqlRaw("Select * FROM Tickets WHERE ");
+            }
+        
+        }
+        
     }
 }

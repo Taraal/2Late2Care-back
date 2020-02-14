@@ -17,11 +17,6 @@ namespace _2Late2CareBack.Controllers
     public class TagController : ControllerBase
     {
 
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<TagController> _logger;
 
         public TagController(ILogger<TagController> logger)
@@ -29,7 +24,37 @@ namespace _2Late2CareBack.Controllers
             _logger = logger;
         }
 
-        
+        [Route("/{libelle}/tickets")]
+        [HttpGet]
+        public IEnumerable<Ticket> GetTicketsByTag([FromRoute]string libelle){
+            DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
+            var one = ConfigurationManager.ConnectionStrings;
+            var random = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            string docstring = random.ConnectionString;
+
+            optionsBuilder.UseMySql(docstring);
+
+            using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
+            {
+                return dbContext.Tickets.FromSqlRaw("SELECT * FROM Tickets t JOIN TicketTags tt ON t.Id = tt.TicketId WHERE tt.libelle = ?", libelle);
+            }
+        }
+
+        [HttpGet]
+        public IEnumerable<Tag> GetAll(){
+            DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
+            var one = ConfigurationManager.ConnectionStrings;
+            var random = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            string docstring = random.ConnectionString;
+
+            optionsBuilder.UseMySql(docstring);
+
+            using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
+            {
+                return dbContext.Tags;
+            }
+
+        }        
         
         [HttpPost]
         public void Post([FromBody] Tag tag)
@@ -50,18 +75,6 @@ namespace _2Late2CareBack.Controllers
             }
         }
         
-
-        [HttpGet]
-        public IEnumerable<Tag> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Tag
-            {
-                Id = index,
-                libelle = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
         
     }
 }
