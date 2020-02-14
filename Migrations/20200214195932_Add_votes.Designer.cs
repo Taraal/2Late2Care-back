@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2Late2CareBack.Models;
 
 namespace _2Late2CareBack.Migrations
 {
     [DbContext(typeof(ContexteBDD))]
-    partial class ContexteBDDModelSnapshot : ModelSnapshot
+    [Migration("20200214195932_Add_votes")]
+    partial class Add_votes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
