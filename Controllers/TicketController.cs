@@ -64,7 +64,9 @@ namespace _2Late2CareBack.Controllers
                 {
                     TicketTag ticketTag = new TicketTag();
                     ticketTag.tag = tag;
+                    ticketTag.libelle = tag.libelle;
                     ticketTag.ticket = dbTicket;
+                    //cassable ? A revoir //ticketTag.TicketId = dbTicket.Id;
                     tag.TicketTags.Add(ticketTag);
                     dbTicket.TicketTags.Add(ticketTag);
                 }

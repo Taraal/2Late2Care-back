@@ -22,11 +22,13 @@ namespace _2Late2CareBack.Models
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Utilisateur> Utilisateurs { get; set; }
         public DbSet<Classe> Classes {get; set;}
+        public DbSet<Vote> Votes {get; set;}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TicketTag>().HasKey(sc => new { sc.TagId, sc.TicketId });
+            modelBuilder.Entity<TicketTag>().HasKey(tt => new { tt.libelle, tt.TicketId });
+            modelBuilder.Entity<Vote>().HasKey(v => new {v.utilisateurId, v.ticketId});
         }
 
 
