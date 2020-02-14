@@ -12,8 +12,9 @@ namespace _2Late2CareBack
         [Key]
         public int Id { get; set; }
 
-        [StringLength(50)]
         [Required]
         public string libelle {get; set;}
+
+        public virtual ICollection<TicketTag> TicketTags {get; set;}
     }
 }

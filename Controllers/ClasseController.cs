@@ -14,17 +14,12 @@ namespace _2Late2CareBack.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TagController : ControllerBase
+    public class ClasseController : ControllerBase
     {
 
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ILogger<ClasseController> _logger;
 
-        private readonly ILogger<TagController> _logger;
-
-        public TagController(ILogger<TagController> logger)
+        public ClasseController(ILogger<ClasseController> logger)
         {
             _logger = logger;
         }
@@ -32,7 +27,7 @@ namespace _2Late2CareBack.Controllers
         
         
         [HttpPost]
-        public void Post([FromBody] Tag tag)
+        public void Post([FromBody] Classe Classe)
         {
             DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
             var one = ConfigurationManager.ConnectionStrings;
@@ -43,25 +38,13 @@ namespace _2Late2CareBack.Controllers
 
             using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
             {
-                Tag dbTag = new Tag();
-                dbTag.libelle = tag.libelle;
-                dbContext.Tags.Add(dbTag);
+                Classe dbClasse = new Classe();
+                dbClasse.libelle = Classe.libelle;
+                dbContext.Classes.Add(dbClasse);
                 dbContext.SaveChanges();
             }
         }
         
-
-        [HttpGet]
-        public IEnumerable<Tag> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Tag
-            {
-                Id = index,
-                libelle = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
         
     }
 }

@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace _2Late2CareBack
 {
-    public class Classe
+    public class TicketTag
     {
-        [Key]
-        [StringLength(50)]
-        [Required]
-        public string libelle {get; set;}
+
+        public int TagId {get; set;}
+        public Tag tag {get; set;}
+
+        public int TicketId {get; set;}
+        public Ticket ticket {get; set;}
+
 
     }
 }

@@ -9,6 +9,7 @@ namespace _2Late2CareBack
 {
     public class Ticket
     {
+
         [Key]
         public int Id { get; set; }
 
@@ -25,7 +26,8 @@ namespace _2Late2CareBack
 
         public string urlPhoto {get; set;}
 
-        public ICollection<Tag> Tags { get; set; }
+        public ICollection<TicketTag> TicketTags {get; set;}
+
 
     }
 }
