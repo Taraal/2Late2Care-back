@@ -9,8 +9,8 @@ using _2Late2CareBack.Models;
 namespace _2Late2CareBack.Migrations
 {
     [DbContext(typeof(ContexteBDD))]
-    [Migration("20200214174409_AddFields")]
-    partial class AddFields
+    [Migration("20200215172325_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,18 +21,13 @@ namespace _2Late2CareBack.Migrations
 
             modelBuilder.Entity("_2Late2CareBack.Classe", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
                     b.Property<string>("libelle")
-                        .IsRequired()
                         .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
                         .HasMaxLength(50);
 
-                    b.HasKey("Id");
+                    b.HasKey("libelle");
 
-                    b.ToTable("Classe");
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("_2Late2CareBack.Tag", b =>
@@ -41,16 +36,11 @@ namespace _2Late2CareBack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("TicketId")
-                        .HasColumnType("int");
-
                     b.Property<string>("libelle")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TicketId");
 
                     b.ToTable("Tags");
                 });
@@ -63,6 +53,9 @@ namespace _2Late2CareBack.Migrations
 
                     b.Property<int>("auteurId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -90,8 +83,9 @@ namespace _2Late2CareBack.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("classeId")
-                        .HasColumnType("int");
+                    b.Property<string>("classelibelle")
+                        .IsRequired()
+                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4");
 
                     b.Property<string>("mail")
                         .IsRequired()
@@ -104,16 +98,22 @@ namespace _2Late2CareBack.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("classeId");
+                    b.HasIndex("classelibelle");
 
                     b.ToTable("Utilisateurs");
                 });
 
-            modelBuilder.Entity("_2Late2CareBack.Tag", b =>
+            modelBuilder.Entity("_2Late2CareBack.Vote", b =>
                 {
-                    b.HasOne("_2Late2CareBack.Ticket", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("TicketId");
+                    b.Property<int>("utilisateurId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ticketId")
+                        .HasColumnType("int");
+
+                    b.HasKey("utilisateurId", "ticketId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("_2Late2CareBack.Ticket", b =>
@@ -129,7 +129,7 @@ namespace _2Late2CareBack.Migrations
                 {
                     b.HasOne("_2Late2CareBack.Classe", "classe")
                         .WithMany()
-                        .HasForeignKey("classeId")
+                        .HasForeignKey("classelibelle")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
