@@ -20,7 +20,6 @@ namespace _2Late2CareBack
         public Classe classe {get; set;}
 
         [Required]
-        public string mail {get; set;}
-
+        public string mdp {get; set;}
     }
 }
