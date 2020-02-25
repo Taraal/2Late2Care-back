@@ -59,7 +59,23 @@ namespace _2Late2CareBack.Controllers
                 dbContext.SaveChanges();
             }
         }
-        
+
+        [HttpDelete]
+        public void Delete([FromBody] Vote vote){
+            DbContextOptionsBuilder<ContexteBDD> optionsBuilder = new DbContextOptionsBuilder<ContexteBDD>();
+            var one = ConfigurationManager.ConnectionStrings;
+            var random = ConfigurationManager.ConnectionStrings["DefaultConnection"];
+            string docstring = random.ConnectionString;
+
+            optionsBuilder.UseMySql(docstring);
+
+            using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
+            {
+                dbContext.Votes.Remove(vote);
+            }
+
+        }
+
         
     }
 }

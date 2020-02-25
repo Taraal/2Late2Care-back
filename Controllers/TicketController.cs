@@ -87,7 +87,7 @@ namespace _2Late2CareBack.Controllers
 
             using (Models.ContexteBDD dbContext = new Models.ContexteBDD(optionsBuilder.Options))
             {
-                return dbContext.Tickets.FromSqlRaw("Select * FROM Tickets WHERE ");
+                return dbContext.Tickets.FromSqlRaw("Select * FROM Tickets WHERE DATEDIFF(NOW(), date) <= 30");
             }
         
         }

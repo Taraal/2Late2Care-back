@@ -50,8 +50,6 @@ namespace _2Late2CareBack.Controllers
         }
         
 
-        DefaultApiConventions
-
         /*
         [HttpGet]
         public IEnumerable<Ticket> Get()
